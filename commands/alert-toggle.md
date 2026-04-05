@@ -1,9 +1,9 @@
 ---
-name: sound-toggle
-description: "Notification sesini aç/kapat. Triggers: ses kapat, mute, unmute, sound toggle, sessiz mod"
+name: alert-toggle
+description: "Notification sesini aç/kapat. Triggers: alert toggle, ses kapat, mute, unmute, sound toggle, sessiz mod, bildirim sesi"
 ---
 
-# /sound-toggle
+# /alert-toggle
 
 Notification sesini toggle eder.
 
