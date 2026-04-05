@@ -72,7 +72,7 @@ config/
   telegram-ask.sh      ← bidirectional: ask via Telegram or terminal
   telegram-wait.sh     ← wait for Telegram reply
   telegram-poll.sh     ← full bidirectional bot loop
-  telegram-agent.py    ← Python Telegram agent
+  telegram-agent.py    ← Python Telegram agent (will move to ccplugin-telegram — CC-7)
 ```
 
 ## Relation to ccplugin-telegram
