@@ -1,6 +1,6 @@
 #!/bin/bash
 # ccplugin-notifications — Standalone installer
-# Works with or without claude-config
+# Works independently — no claude-config required
 
 set -euo pipefail
 PLUGIN_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -8,36 +8,20 @@ GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
 
 echo "=== ccplugin-notifications installer ==="
 
-# Option A: Bootstrap claude-config if missing
+# Install to ~/.claude/skills/notifications/
+DEST="$HOME/.claude/skills/notifications"
+mkdir -p "$DEST"
+cp -r "$PLUGIN_DIR/"* "$DEST/" 2>/dev/null || true
+rm -rf "$DEST/.git" 2>/dev/null || true
+chmod +x "$DEST/notify.sh" "$DEST/install.sh" 2>/dev/null || true
+chmod +x "$DEST/channels/"*.sh 2>/dev/null || true
+chmod +x "$DEST/triggers/"*.sh 2>/dev/null || true
+
+# Backward compat symlinks (if claude-config exists)
 CLAUDE_CONFIG="${CLAUDE_CONFIG_DIR:-$HOME/Projects/claude-config}"
-if [ ! -d "$CLAUDE_CONFIG/.git" ]; then
-  echo ""
-  echo "claude-config bulunamadı ($CLAUDE_CONFIG)"
-  echo "Seçenek:"
-  echo "  1) claude-config'i de kur (tam sistem — önerilen)"
-  echo "  2) Sadece bu plugin'i kur (standalone)"
-  read -p "Seçim [1/2]: " choice
-  if [ "${choice:-1}" = "1" ]; then
-    echo "claude-config kuruluyor..."
-    gh repo clone SkyWalker2506/claude-config "$CLAUDE_CONFIG" 2>/dev/null || \
-      git clone https://github.com/SkyWalker2506/claude-config.git "$CLAUDE_CONFIG"
-    cd "$CLAUDE_CONFIG" && bash ./install.sh
-    exit 0
-  fi
-fi
-
-# Standalone: copy files to ~/.claude/
-DEST="$HOME/.claude"
-mkdir -p "$DEST/skills/notifications"
-cp -r "$PLUGIN_DIR/"* "$DEST/skills/notifications/" 2>/dev/null || true
-chmod +x "$DEST/skills/notifications/notify.sh" 2>/dev/null || true
-chmod +x "$DEST/skills/notifications/channels/"*.sh 2>/dev/null || true
-chmod +x "$DEST/skills/notifications/triggers/"*.sh 2>/dev/null || true
-
-# Symlink notify.sh to config/ for backward compat with claude-config
 if [ -d "$CLAUDE_CONFIG/config" ]; then
-  ln -sf "$DEST/skills/notifications/channels/telegram.sh" "$CLAUDE_CONFIG/config/notify.sh" 2>/dev/null || true
-  ln -sf "$DEST/skills/notifications/notify.sh" "$CLAUDE_CONFIG/config/notify-unified.sh" 2>/dev/null || true
+  ln -sf "$DEST/channels/telegram.sh" "$CLAUDE_CONFIG/config/notify.sh" 2>/dev/null || true
+  ln -sf "$DEST/notify.sh" "$CLAUDE_CONFIG/config/notify-unified.sh" 2>/dev/null || true
 fi
 
 # Secrets check
@@ -56,5 +40,9 @@ echo ""
 echo -e "${GREEN}✅ ccplugin-notifications kuruldu${NC}"
 echo ""
 echo "Kullanım:"
-echo "  bash ~/.claude/skills/notifications/notify.sh --message 'Deploy done' --channel all"
-echo "  bash ~/.claude/skills/notifications/notify.sh --event build-error --message 'flutter failed'"
+echo "  bash notify.sh --message 'Deploy done' --channel all"
+echo "  bash notify.sh --event build-error --message 'flutter failed'"
+echo ""
+echo "Tam sistem için (auto-dispatch, 134 agent, 36 skill, MCP):"
+echo "  git clone https://github.com/SkyWalker2506/claude-config ~/Projects/claude-config"
+echo "  cd ~/Projects/claude-config && ./install.sh"
