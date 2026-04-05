@@ -29,6 +29,12 @@ bash notify.sh --event ai-question --message "Approve schema migration?"
 bash notify.sh --event task-done --message "Feature shipped"
 ```
 
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `/sound-toggle` | Toggle notification sound on/off (`~/.claude/notifications-mute` flag) |
+
 ## Channels
 
 | Channel | Description |

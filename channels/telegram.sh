@@ -10,7 +10,7 @@ BUTTONS="${3:-}"  # JSON: [["Label","data"],["Label2","data2"]]
 
 # Sesli bildirim (macOS)
 SOUND_ENABLED="${CLAUDE_SOUND:-1}"
-if [ "$SOUND_ENABLED" = "1" ] && command -v afplay &>/dev/null; then
+if [ "$SOUND_ENABLED" = "1" ] && [ ! -f "$HOME/.claude/notifications-mute" ] && command -v afplay &>/dev/null; then
   afplay /System/Library/Sounds/Glass.aiff &
 fi
 

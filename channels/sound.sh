@@ -17,6 +17,10 @@ resume_music() {
 }
 
 play_alert() {
+  # Mute kontrolü
+  if [ -f "$HOME/.claude/notifications-mute" ]; then
+    exit 0
+  fi
   if command -v afplay &>/dev/null; then
     afplay /System/Library/Sounds/Glass.aiff 2>/dev/null &
   fi
