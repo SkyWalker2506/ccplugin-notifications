@@ -1,0 +1,13 @@
+{
+  "name": "notifications",
+  "description": "Multi-channel notifications for Claude Code — Telegram, macOS, sound control. DevFocus build error & AI question triggers. Works standalone or with claude-config.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Musab Kara",
+    "url": "https://github.com/SkyWalker2506"
+  },
+  "homepage": "https://github.com/SkyWalker2506/ccplugin-notifications",
+  "repository": "https://github.com/SkyWalker2506/ccplugin-notifications",
+  "license": "MIT",
+  "keywords": ["telegram", "notification", "macos", "sound", "devfocus", "build-error", "alert", "focus"]
+}
