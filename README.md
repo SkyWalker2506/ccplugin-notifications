@@ -62,25 +62,6 @@ TELEGRAM_CHAT_ID=<from @userinfobot>
 
 Telegram is optional — other channels work without it.
 
-## Structure
-
-```
-notify.sh              ← single entry point
-channels/
-  telegram.sh          ← Telegram sender
-  macos.sh             ← macOS native notification
-  sound.sh             ← music pause/resume + alert
-triggers/
-  build-error.sh       ← DevFocus: build failure
-  ai-question.sh       ← DevFocus: Claude waiting for input
-  task-done.sh         ← task completed
-config/
-  telegram-ask.sh      ← bidirectional: ask via Telegram or terminal
-  telegram-wait.sh     ← wait for Telegram reply
-  telegram-poll.sh     ← full bidirectional bot loop
-  telegram-agent.py    ← Python Telegram agent (will move to ccplugin-telegram — CC-7)
-```
-
 ## Relation to ccplugin-telegram
 
 `ccplugin-telegram` focuses on **bidirectional control** — run Claude from your phone.  
@@ -92,4 +73,5 @@ They share the same Telegram credentials and can run simultaneously.
 
 - [claude-config](https://github.com/SkyWalker2506/claude-config) — Multi-Agent OS
 - [ccplugin-telegram](https://github.com/SkyWalker2506/ccplugin-telegram) — Control Claude via Telegram
-- [claude-marketplace](https://github.com/SkyWalker2506/claude-marketplace) — Plugin catalog
+- [claude-marketplace](https://github.com/SkyWalker2506/claude-marketplace) — Browse & install all 18 plugins
+- [ClaudeHQ](https://github.com/SkyWalker2506/ClaudeHQ) — Claude ecosystem HQ
