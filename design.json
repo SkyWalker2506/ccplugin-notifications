@@ -1,0 +1,49 @@
+{
+  "cds_version": "1.0",
+  "name": "ccplugin-notifications",
+  "type": "plugin",
+  "input_patterns": [
+    {
+      "type": "machine_api",
+      "description": "bash notify.sh --message TEXT --channel [telegram|macos|sound|all]"
+    },
+    {
+      "type": "slash_command",
+      "commands": [
+        "/send-notify"
+      ],
+      "args_schema": {
+        "message": "string",
+        "channel": "string?"
+      }
+    }
+  ],
+  "output_patterns": [
+    {
+      "type": "notification",
+      "channels": [
+        "telegram",
+        "macos",
+        "terminal"
+      ]
+    }
+  ],
+  "lifecycle": {
+    "preflight": {
+      "required_tools": [
+        "bash",
+        "curl"
+      ],
+      "required_secrets": [
+        "TELEGRAM_BOT_TOKEN",
+        "TELEGRAM_CHAT_ID"
+      ],
+      "required_mcp": []
+    }
+  },
+  "error_handling": {
+    "retry_network": true,
+    "max_retries": 2,
+    "fallback": "macOS notification only"
+  }
+}
